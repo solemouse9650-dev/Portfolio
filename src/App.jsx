@@ -30,11 +30,11 @@ import { FaGithub } from 'react-icons/fa';
 import {
   benefits,
   faqs,
+  legalPages,
   navItems,
   processSteps,
   projects,
   schemaData,
-  serviceIncludes,
   services,
   siteConfig,
   socialLinks,
@@ -150,15 +150,19 @@ function useAnimatedNumber(target) {
 }
 
 function StatCard({ stat, index }) {
-  const { ref, value } = useAnimatedNumber(stat.value);
+  const { ref, value } = useAnimatedNumber(stat.value ?? 0);
 
   return (
     <Reveal delay={index * 90}>
       <article ref={ref} className="stat-card surface-card">
         <span className="stat-value">
-          {stat.prefix ?? ''}
-          {value}
-          {stat.suffix ?? ''}
+          {stat.displayValue ?? (
+            <>
+              {stat.prefix ?? ''}
+              {value}
+              {stat.suffix ?? ''}
+            </>
+          )}
         </span>
         <h3>{stat.label}</h3>
         <p>{stat.description}</p>
@@ -183,7 +187,89 @@ function InteractiveCard({ as: Component = 'article', className = '', children, 
   );
 }
 
+function LegalDocument({ page, currentYear }) {
+  const legalLinks = [
+    { slug: 'privacidad', label: 'Política de Privacidad' },
+    { slug: 'terminos', label: 'Términos y Condiciones' },
+    { slug: 'cookies', label: 'Política de Cookies' },
+  ];
+
+  return (
+    <div className="page-shell legal-page">
+      <a className="skip-link" href="#contenido-legal">
+        Saltar al contenido
+      </a>
+
+      <header className="site-header">
+        <div className="container header-inner surface-glass">
+          <a className="brand" href={import.meta.env.BASE_URL} aria-label="Volver al portfolio de Zentro Web">
+            <img src={siteConfig.logo} alt="Logo de Zentro Web" width="66" height="44" />
+            <span>
+              <strong>Zentro</strong>
+              <small>Web</small>
+            </span>
+          </a>
+          <a className="button button-secondary button-small" href={import.meta.env.BASE_URL}>
+            Volver al portfolio
+          </a>
+        </div>
+      </header>
+
+      <main id="contenido-legal" className="legal-main">
+        <section className="legal-hero">
+          <div className="hero-orb orb-left" aria-hidden="true" />
+          <div className="container">
+            <span className="section-kicker">Información legal</span>
+            <h1>{page.title}</h1>
+            <p>{page.description}</p>
+            <span className="legal-updated">Última actualización: {page.updatedAt}</span>
+          </div>
+        </section>
+
+        <section className="legal-section">
+          <div className="container legal-layout">
+            <aside className="legal-nav surface-card" aria-label="Documentos legales">
+              <strong>Documentos</strong>
+              {legalLinks.map((item) => (
+                <a
+                  key={item.slug}
+                  className={page.title === item.label ? 'is-active' : ''}
+                  href={`${import.meta.env.BASE_URL}?legal=${item.slug}`}
+                >
+                  {item.label}
+                </a>
+              ))}
+            </aside>
+
+            <article className="legal-content surface-card">
+              {page.sections.map((section) => (
+                <section key={section.title}>
+                  <h2>{section.title}</h2>
+                  {section.paragraphs.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </section>
+              ))}
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer className="site-footer legal-footer">
+        <div className="container footer-bottom">
+          <span>© {currentYear} Zentro Web. Todos los derechos reservados.</span>
+          <span className="guardian-note">
+            Actividades comerciales bajo supervisión de un tutor responsable.
+          </span>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
 export default function App() {
+  const legalSlug = new URLSearchParams(window.location.search).get('legal');
+  const legalPage = legalPages[legalSlug];
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeFaq, setActiveFaq] = useState(0);
   const [showTopButton, setShowTopButton] = useState(false);
@@ -205,6 +291,18 @@ export default function App() {
     );
     return () => window.clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!legalPage) return undefined;
+
+    const previousTitle = document.title;
+    document.title = `${legalPage.title} | Zentro Web`;
+    window.scrollTo({ top: 0 });
+
+    return () => {
+      document.title = previousTitle;
+    };
+  }, [legalPage]);
 
   useEffect(() => {
     let animationFrame = 0;
@@ -272,6 +370,10 @@ export default function App() {
   };
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (legalPage) {
+    return <LegalDocument page={legalPage} currentYear={currentYear} />;
+  }
 
   return (
     <>
@@ -416,8 +518,8 @@ export default function App() {
                     fetchPriority="high"
                   />
                   <div className="floating-badge badge-primary">
-                    <strong>+25</strong>
-                    <span>proyectos</span>
+                    <strong>A medida</strong>
+                    <span>atención personalizada</span>
                   </div>
                   <div className="floating-badge badge-secondary">
                     <strong>100%</strong>
@@ -452,13 +554,26 @@ export default function App() {
                 {projects.map((project, index) => (
                   <Reveal key={project.name} delay={index * 100}>
                     <InteractiveCard className="project-card surface-card">
-                      <img
-                        src={project.image}
-                        alt={`Vista previa del proyecto ${project.name}`}
-                        width="800"
-                        height="560"
-                        loading="lazy"
-                      />
+                      <div className="project-media">
+                        <img
+                          className="project-preview"
+                          src={project.image}
+                          alt={`Vista previa representativa del proyecto ${project.name}`}
+                          width="800"
+                          height="560"
+                          loading="lazy"
+                        />
+                        <span className="project-overlay" aria-hidden="true" />
+                        <span className="project-favicon">
+                          <img
+                            src={project.favicon}
+                            alt={`Identidad visual de ${project.name}`}
+                            width="48"
+                            height="48"
+                            loading="lazy"
+                          />
+                        </span>
+                      </div>
                       <div className="project-content">
                         <span className="project-category">{project.category}</span>
                         <h3>{project.name}</h3>
@@ -501,7 +616,7 @@ export default function App() {
                         <h3>{service.title}</h3>
                         <p>{service.subtitle}</p>
                         <ul className="feature-list">
-                          {serviceIncludes.map((feature) => (
+                          {service.features.map((feature) => (
                             <li key={feature}>
                               <FaCheck aria-hidden="true" />
                               {feature}
@@ -605,15 +720,27 @@ export default function App() {
               <Reveal>
                 <div className="about-copy">
                   <span className="section-kicker">Sobre mí</span>
-                  <h2>Presentación profesional editable para reforzar autoridad y cercanía.</h2>
+                  <h2>Hola, soy Alexis Ríos 👋</h2>
                   <p>
-                    Soy diseñador y desarrollador web especializado en crear experiencias digitales que combinan estética,
-                    estrategia y rendimiento. Trabajo con marcas que necesitan una web a la altura de su propuesta de valor.
+                    Tengo 13 años y soy diseñador y desarrollador web, especializado en crear sitios web modernos, rápidos y
+                    pensados para generar resultados.
                   </p>
                   <p>
-                    Mi enfoque prioriza claridad de mensaje, diseño premium y una estructura pensada para que cada visita tenga
-                    más probabilidades de convertirse en consulta, reunión o venta. Este texto es de ejemplo y está listo para
-                    reemplazarse más adelante por tu historia real.
+                    Mi objetivo no es solo diseñar páginas atractivas, sino desarrollar experiencias digitales que transmitan
+                    confianza, conviertan visitas en clientes y ayuden a que cada negocio tenga una presencia online más
+                    profesional.
+                  </p>
+                  <p>
+                    Cada proyecto que realizo está enfocado en mejorar la visibilidad de la marca, facilitar el contacto con
+                    los clientes y ofrecer una experiencia clara, rápida y adaptada a cualquier dispositivo.
+                  </p>
+                  <p>
+                    Creo que hoy una página web es mucho más que una carta de presentación: es una herramienta para vender,
+                    destacar frente a la competencia y hacer crecer un negocio.
+                  </p>
+                  <p>
+                    Si buscas una web moderna, funcional y diseñada para obtener resultados, estaré encantado de ayudarte a
+                    hacer realidad tu proyecto.
                   </p>
                   <div className="about-points" aria-label="Puntos destacados">
                     <span>Diseño visual premium</span>
@@ -848,10 +975,16 @@ export default function App() {
           </div>
 
           <div className="container footer-bottom">
-            <span>© {currentYear} Zentro Web. Todos los derechos reservados.</span>
+            <div className="footer-copyright">
+              <span>© {currentYear} Zentro Web. Todos los derechos reservados.</span>
+              <small className="guardian-note">
+                Las actividades comerciales realizadas por el desarrollador cuentan con la supervisión de un tutor responsable.
+              </small>
+            </div>
             <div className="footer-legal">
-              <a href="#inicio">Política de privacidad</a>
-              <a href="#inicio">Términos y condiciones</a>
+              <a href={`${import.meta.env.BASE_URL}?legal=privacidad`}>Política de Privacidad</a>
+              <a href={`${import.meta.env.BASE_URL}?legal=terminos`}>Términos y Condiciones</a>
+              <a href={`${import.meta.env.BASE_URL}?legal=cookies`}>Política de Cookies</a>
             </div>
           </div>
         </footer>
