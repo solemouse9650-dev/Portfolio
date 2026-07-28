@@ -1,0 +1,17 @@
+<svg width="800" height="560" viewBox="0 0 800 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="560" rx="36" fill="#F6F8FC"/>
+  <rect x="54" y="54" width="692" height="452" rx="30" fill="white" stroke="#DCE4F2"/>
+  <rect x="94" y="112" width="250" height="20" rx="10" fill="#1A1D24"/>
+  <rect x="94" y="148" width="170" height="12" rx="6" fill="#9FA8BA"/>
+  <rect x="94" y="208" width="612" height="186" rx="26" fill="url(#paint0_linear)"/>
+  <rect x="124" y="240" width="228" height="20" rx="10" fill="white"/>
+  <rect x="124" y="278" width="280" height="13" rx="6.5" fill="#E7F0FF"/>
+  <rect x="124" y="320" width="132" height="42" rx="21" fill="#2F7DE1"/>
+  <text x="94" y="450" fill="#1A1D24" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="700">Arte &amp; Cultura</text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="94" y1="208" x2="706" y2="394" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F172A"/>
+      <stop offset="1" stop-color="#2F7DE1"/>
+    </linearGradient>
+  </defs>
+</svg>

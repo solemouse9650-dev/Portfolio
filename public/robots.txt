@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://solemouse9650-dev.github.io/Portfolio/sitemap.xml

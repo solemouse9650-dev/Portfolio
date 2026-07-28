@@ -1,0 +1,15 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" rx="32" fill="#F6F8FC"/>
+  <circle cx="210" cy="158" r="130" fill="#DCEBFF"/>
+  <circle cx="1025" cy="520" r="150" fill="#E8F0FF"/>
+  <rect x="725" y="110" width="320" height="410" rx="34" fill="white" stroke="#D8E3F4"/>
+  <rect x="772" y="162" width="226" height="17" rx="8.5" fill="#DCE4F4"/>
+  <rect x="772" y="200" width="170" height="12" rx="6" fill="#E8EEF8"/>
+  <rect x="772" y="265" width="226" height="110" rx="22" fill="#F4F7FC"/>
+  <rect x="772" y="399" width="98" height="38" rx="19" fill="#2F7DE1"/>
+  <path d="M180 176H479L393 278H311L344 234H234L180 176Z" fill="#12141A"/>
+  <path d="M476 437H176L263 334H344L312 379H421L476 437Z" fill="#12141A"/>
+  <circle cx="329" cy="306" r="38" fill="#2F7DE1"/>
+  <text x="180" y="500" fill="#12141A" font-family="Inter, Arial, sans-serif" font-size="64" font-weight="800">Zentro Web</text>
+  <text x="180" y="552" fill="#5B6475" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="500">Diseño y desarrollo web premium orientado a conversión</text>
+</svg>
