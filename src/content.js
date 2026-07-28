@@ -2,7 +2,7 @@ const assetUrl = (fileName) => `${import.meta.env.BASE_URL}${fileName}`;
 
 export const siteConfig = {
   brand: 'Zentro Web',
-  siteUrl: 'https://solemouse9650-dev.github.io/Portfolio/',
+  siteUrl: 'https://portfolio-two-pi-pu71h6zpmm.vercel.app/',
   email: 'contacto@zentroweb.com',
   whatsappUrl: 'https://wa.me/543758502801',
   instagramUrl: 'https://www.instagram.com/zentro_web.ar/',
@@ -304,9 +304,9 @@ export const schemaData = {
   name: 'Zentro Web',
   description:
     'Servicio profesional de diseño y desarrollo web orientado a crear sitios rápidos, modernos y optimizados para convertir visitas en clientes.',
-  url: 'https://solemouse9650-dev.github.io/Portfolio/',
-  image: 'https://solemouse9650-dev.github.io/Portfolio/zentro.jpeg',
-  logo: 'https://solemouse9650-dev.github.io/Portfolio/zentro.jpeg',
+  url: 'https://portfolio-two-pi-pu71h6zpmm.vercel.app/',
+  image: 'https://portfolio-two-pi-pu71h6zpmm.vercel.app/zentro.jpeg',
+  logo: 'https://portfolio-two-pi-pu71h6zpmm.vercel.app/zentro.jpeg',
   areaServed: 'Argentina',
   email: 'contacto@zentroweb.com',
   sameAs: [
